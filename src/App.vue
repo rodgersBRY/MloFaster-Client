@@ -44,8 +44,8 @@
         <ul class="nav-links">
           <li class="nav-link"><a href="">About Us</a></li>
         
-          <li class="nav-link"><a href="">Log In</a></li>
-          <li class="nav-link"><a href="">Register</a></li>
+          <li class="nav-link"><a href="/login">Log In</a></li>
+          <li class="nav-link"><a href="/register">Register</a></li>
           <li class="nav-link"><a href="">Logout</a></li>
         </ul>
       </v-app-bar>
@@ -68,8 +68,8 @@ export default {
 
 <style scoped>
 .app-bar {
-  position: fixed;
-  z-index: auto;
+  position: relative;
+  z-index: 5;
 }
 
 .logo {

@@ -35,6 +35,10 @@
                 </v-list-item>
             </v-list>
         </v-sheet>
+
+        <div class="footer">
+            <app-footer />
+        </div>
     </div>
 </template>
 
@@ -71,6 +75,6 @@ export default {
 
 .item-list {
     width: 60%;
-    margin: 2rem auto;
+    margin: 4rem auto;
 }
 </style>

@@ -5,13 +5,9 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 
-// import components globally
-import Login from './components/Login.vue'
-import Register from './components/Register.vue'
+import Footer from './components/Footer.vue'
 
-// use the components in vue app
-Vue.component('login-form', Login)
-Vue.component('register-form', Register)
+Vue.component('app-footer', Footer)
 
 Vue.config.productionTip = false
 

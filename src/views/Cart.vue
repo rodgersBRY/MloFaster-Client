@@ -1,6 +1,6 @@
 <template>
     <div class="cart">
-        <v-sheet class="item-list pa-5">
+        <v-sheet class="item-list pa-5" elevation="3">
             <v-list three-line>
                 <v-list-item>
                     <v-list-item-content>
@@ -41,6 +41,10 @@
                 <v-btn depressed dark color="warning">Clear Cart</v-btn>
             </div>
         </v-sheet>
+
+        <div class="footer">
+            <app-footer />
+        </div>
     </div>
 </template>
 
@@ -62,12 +66,8 @@ export default {
 </script>
 
 <style scoped>
-.cart {
-    background-color: rgb(201, 201, 201);
-}
-
 .item-list {
     width: 60%;
-    margin: 2rem auto;
+    margin: 4rem auto;
 }
 </style>
