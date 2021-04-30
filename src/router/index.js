@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Register from '../views/Auth/Register.vue'
 import Login from '../views/Auth/Login.vue'
+import { store } from '../store'
 
 Vue.use(VueRouter)
 
@@ -24,11 +25,6 @@ const routes = [
     component: Register
   },
   {
-    path: '/new-hotel',
-    name: 'New Hotel',
-    component: () => import('../views/New-hotel.vue')
-  },
-  {
     path: '/hotel/:Hid',
     name: 'Hotel',
     component: () => import('../components/Hotel.vue')
@@ -36,12 +32,18 @@ const routes = [
   {
     path: '/cart',
     name: 'Cart',
-    component: () => import('../views/Cart.vue')
+    component: () => import('../views/Cart.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/orders',
     name: 'Orders',
-    component: () => import('../views/Orders.vue')
+    component: () => import('../views/Orders.vue'),
+    meta: {
+      requiresAuth: true
+    }
   }
 ]
 
@@ -49,6 +51,18 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if(store.getters.isLoggedIn) {
+      next()
+      return
+    }
+    next('/login')
+  } else {
+    next()
+  }
 })
 
 export default router

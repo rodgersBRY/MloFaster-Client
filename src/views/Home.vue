@@ -1,10 +1,7 @@
 <template>
   <div class="home">
-    <div class="add-hotel mt-7 d-flex justify-end mx-12">
-      <v-btn color="teal" dark to="/new-hotel">
-        <i class="bx bx-plus bx-sm"></i>
-        New Hotel
-      </v-btn>
+    <div v-if="isLoggedIn" class="add-hotel mt-7 d-flex justify-end mx-12">
+      <new-hotel />
     </div>
     <!-- list of hotels -->
     <v-layout row wrap class="main-content">
@@ -21,7 +18,7 @@
           </v-list-item-content>
 
           <v-list-item-avatar tile size="100" color="grey">
-            <v-img :src="require('@/assets/ba.jpg')"></v-img>
+            <v-img :src="i.img"></v-img>
           </v-list-item-avatar>
         </v-list-item>
       </v-card>
@@ -35,19 +32,31 @@
 </template>
 
 <script>
+import NewHotel from '@/components/New-hotel'
+
 export default {
   name: 'Home',
+
+  components: {
+    'new-hotel': NewHotel
+  },
 
   data() {
     return {
       hotels: [
-        {id: 1, name: 'Black Africa', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Nairobi-CBD' },
-        {id: 2, name: 'Art Cafe`', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Westgate - Westlands' },
-        {id: 3, name: 'Java House', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Sarit Centre - Westlands' },
-        {id: 4, name: 'Da\' Place', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Juja' },
-        {id: 5, name: 'Moyo\'s', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Kahawa Sukari' },
-        {id: 6, name: 'Buma', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Nkubu - Meru' }
+        {id: 1, img: require('../assets/images/Ugali.jpg'), name: 'Black Africa', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Nairobi-CBD' },
+        {id: 2, img: require('../assets/images/avocado.jpg'), name: 'Art Cafe`', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Westgate - Westlands' },
+        {id: 3, img: require('../assets/images/beans.jpg'), name: 'Java House', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Sarit Centre - Westlands' },
+        {id: 4, img: require('../assets/images/kebab.jpg'), name: 'Da\' Place', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Juja' },
+        {id: 5, img: require('../assets/images/peas.jpg'), name: 'Moyo\'s', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Kahawa Sukari' },
+        {id: 6, img: require('../assets/images/rice.jpg'), name: 'Buma', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Nkubu - Meru' }
       ]
+    }
+  },
+
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn
     }
   },
 

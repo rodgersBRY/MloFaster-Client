@@ -17,7 +17,7 @@
 
                 <v-list-item class="mt-2" v-for="(item, i) in cartItems" :key="i">
                     <v-list-item-avatar tile size="100">
-                        <v-img :src="require('@/assets/Ugali.jpg')"></v-img>
+                        <v-img :src="require('@/assets/images/Ugali.jpg')"></v-img>
                     </v-list-item-avatar>
 
                     <v-list-item-content>

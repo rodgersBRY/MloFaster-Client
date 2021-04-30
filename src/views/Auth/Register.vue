@@ -9,21 +9,15 @@
                 <v-text-field label="E-Mail" type="email" dense v-model="email" color="teal" />
                 <v-select :items="roles" label="Status" dense v-model="status" color="teal"></v-select>
                 <v-text-field label="Password" type="password" dense v-model="password" color="teal" />
-                <v-text-field label="Confirm Password" type="password" dense v-model="confirmPass" color="teal" />
+                <v-text-field label="Confirm Password" type="password" v-model="confirmPass" color="teal" :rules="[comparePasswords]" />
             </div>
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
                 color="teal darken-1"
                 text
-                @click="dialog = false">
+                @click="register">
                 Submit
-                </v-btn>
-                <v-btn
-                color="red darken-1"
-                text
-                @click="dialog = false">
-                Cancel
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -45,7 +39,28 @@ export default {
             status: '',
             confirmPass: '',
 
-            roles: ['Administrator', 'Client/Customer']
+            roles: ['admin', 'client']
+        }
+    },
+
+    computed: {
+        comparePasswords() {
+            return this.password !== this.confirmPass ? 'Passwords do not match' : ''
+        },
+    },
+
+    methods: {
+        register() {
+            let data = {
+                name: this.name,
+                email: this.email,
+                phoneNo: this.phoneNo,
+                password: this.password,
+                status: this.status
+            }
+            this.$store.dispatch('register', data)
+                .then(() => this.$router.push('/login'))
+                .catch(err => console.log(err))
         }
     }
 }

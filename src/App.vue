@@ -43,10 +43,9 @@
         <v-spacer />
         <ul class="nav-links">
           <li class="nav-link"><a href="">About Us</a></li>
-        
-          <li class="nav-link"><a href="/login">Log In</a></li>
-          <li class="nav-link"><a href="/register">Register</a></li>
-          <li class="nav-link"><a href="">Logout</a></li>
+          <li class="nav-link" v-if="!isLoggedIn"><a href="/login">Log In</a></li>
+          <li class="nav-link" v-if="!isLoggedIn"><a href="/register">Register</a></li>
+          <li class="nav-link" v-if="isLoggedIn" style="cursor: pointer"><span @click="logout">Logout</span></li>
         </ul>
       </v-app-bar>
     </div>
@@ -58,9 +57,34 @@
 export default {
   name: 'App',
 
+  created() {
+    this.$http.interceptors.response.use(undefined, function(err) {
+      return new Promise((resolve, reject) => {
+        if(err.status === 401 && err.config && !err.config.__isRetryRequest) {
+          this.$store.dispatch('logout').then(() => {
+            this.$router.push('/login')
+          })
+        }
+        throw err
+      })
+    })
+  },
+
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn
+    }
+  },
+
   data() {
     return {
 
+    }
+  },
+
+  methods: {
+    async logout() {
+      await this.$store.dispatch('logout')
     }
   }
 }
@@ -96,6 +120,7 @@ export default {
 }
 
 .nav-link a:hover,
+.nav-link span:hover,
 .nav-link a.active {
   color: rgb(83, 83, 204);
 }

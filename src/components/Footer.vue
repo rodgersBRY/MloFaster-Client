@@ -32,9 +32,7 @@
                 <div class="make-money">
                     <h4>MAKE MONEY WITH MLOFASTER</h4>
                     <ul>
-                        <li>
-                            <a href="/new-hotel" style="text-decoration: none; color: white">Sell on MloFaster</a>
-                        </li>
+                        <li>Sell on MloFaster</li>
                         <li>Become a Delivery Agent</li>
                     </ul>
                 </div>
@@ -43,7 +41,7 @@
                     <ul>
                         <li>Black Africa</li>
                         <li>Da Place</li>
-                        <li>Hotel De'Aliance</li>
+                        <li>Hotel De' Aliance</li>
                         <li></li>
                         <li></li>
                     </ul>
@@ -124,7 +122,7 @@
 
 .input {
     border-radius: 5px;
-    border: 1px solid black;
+    border: 1px solid white;
     padding: 2px 7px;
     width: 70%;
     outline: none;
