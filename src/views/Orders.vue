@@ -21,7 +21,7 @@
                     </v-list-item-avatar>
 
                     <v-list-item-content>
-                        <v-list-item-subtitle>Date: {{ getDate }}</v-list-item-subtitle>
+                        <v-list-item-subtitle>Date: {{ today }}</v-list-item-subtitle>
                         <v-list-item-title v-text="item.name"></v-list-item-title>
                         <v-list-item-subtitle v-text="item.desc"></v-list-item-subtitle>
                     </v-list-item-content>
@@ -47,6 +47,8 @@ export default {
     data() {
         
         return {
+            today: '',
+
             cartItems: [
                 {name: 'Ugali & Sukuma', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit.', price: '80', quantity: '2'},
                 {name: 'Chips Masala', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit.', price: '200', quantity: '1'},
@@ -58,12 +60,10 @@ export default {
         }
     },
 
-    compute: {
-        getDate() {
-            let d = new Date()
-            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-            return d.toLocaleString('en-US', options)
-        }
+    created() {
+        let d = new Date()
+        var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }
+        this.today = d.toLocaleString('en-US', options)
     }
 }
 </script>

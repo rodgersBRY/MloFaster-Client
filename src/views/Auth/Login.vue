@@ -1,35 +1,37 @@
 <template>
     <div class="login">
         <div class="card">
-            <v-alert 
+            <!-- <v-alert 
             class="alert" 
             dense 
             height="30" 
             outlined
-            v-if="error"
-            type="error" 
+            v-if="showError"
+            type="error"
             dismissible>
                 {{ error.message }}
-            </v-alert>
-            <v-card class="form">
-                <v-card-title class="headline">Login</v-card-title>
-                <v-card-text>Enter your Email and Password to get to your account</v-card-text>
-                <div>
-                    <v-text-field label="E-Mail" type="email" v-model="email" color="teal" />
-                    <v-text-field label="Password" type="password" v-model="password" color="teal" />
-                </div>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                    color="teal darken-1"
-                    text
-                    @click="login"
-                    :disabled="loading"
-                    :loading="loading">
-                    Submit
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
+            </v-alert> -->
+
+            <form @submit.prevent="submit">
+                <v-card class="form">
+                    <v-card-title class="headline">Login</v-card-title>
+                    <v-card-text>Enter your Email and Password to get to your account</v-card-text>
+                    <div>
+                        <v-text-field label="E-Mail" type="email" v-model="form.email" color="teal" />
+                        <v-text-field label="Password" type="password" v-model="form.password" color="teal" />
+                    </div>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                        color="teal darken-1"
+                        text
+                        type="submit">
+                        Submit
+                        </v-btn>
+                    </v-card-actions>
+                    <p v-if="showError" class="warning pa-4">Username or Password is incorrect</p>
+                </v-card>
+            </form>
         </div>
 
         <div class="footer">
@@ -39,40 +41,40 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     data() {
         return {
-            email: '',
-            password: ''
+            form: {
+                email: '',
+                password: ''
+            },
+
+            showError: false
         }
     },
 
     computed: {
-        user() {
-            return this.$store.getters.token
-        },
-        error() {
-            return this.$store.getters.error
-        },
         loading() {
             return this.$store.getters.loading
         }
     },
 
-    watch: {
-        user(value) {
-            if(value !== null) {
-                this.$router.push('/')
-            }
-        }
-    },
-
     methods: {
-        login() {
-            this.$store.dispatch('login', { email: this.email, password: this.password })
-        },
-        onDismissed() {
-            this.$store.dispatch('clearError')
+        ...mapActions(['Login']),
+
+        async submit() {
+            const User = new FormData()
+            User.append('email', this.form.email)
+            User.append('password', this.form.password)
+            try {
+                await this.Login(User)
+                this.$router.push('/')
+                this.showError = false
+            } catch(err) {
+                this.showError = true
+            }
         }
     }
 }

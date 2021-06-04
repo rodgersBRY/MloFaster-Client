@@ -67,9 +67,18 @@
                 <div class="payment-methods">
                     <h4>PAYMENT METHODS</h4>
                     <ul>
-                        <li>VISA</li>
-                        <li>MasterCard</li>
-                        <li>MPesa</li>
+                        <li>
+                            <i class="bx bxl-visa bx-md"></i>
+                            <p>VISA</p>
+                        </li>
+                        <li>
+                            <i class="bx bxl-mastercard bx-md"></i>
+                            <p>MasterCard</p>
+                        </li>
+                        <li>
+                            <i class="bx bxs-memory-card bx-md"></i>
+                            <p>MPesa</p>
+                        </li>
                     </ul>
                 </div>
             </div>

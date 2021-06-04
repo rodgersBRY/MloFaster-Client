@@ -1,14 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
-import user from './User'
-import shared from './shared'
+// load the modules
+import auth from './modules/auth'
+import hotels from './modules/hotels'
+import shared from './modules/shared'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   modules: {
-    user: user,
-    shared: shared
-  }
+    auth,
+    hotels,
+    shared
+  },
+  plugins: [createPersistedState()] // deal with Vuex resetting after refreshing 
 })

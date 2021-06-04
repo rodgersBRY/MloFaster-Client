@@ -13,7 +13,7 @@
                 <v-img :src="require('@/assets/profile-pic.jpg')"></v-img>
               </v-avatar>
             </template>
-            <span>Your Profile</span>
+            <span>{{ name }}</span>
           </v-tooltip>
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -41,12 +41,18 @@
           </v-tooltip>
         </div>
         <v-spacer />
-        <ul class="nav-links">
-          <li class="nav-link"><a href="">About Us</a></li>
-          <li class="nav-link" v-if="!isLoggedIn"><a href="/login">Log In</a></li>
-          <li class="nav-link" v-if="!isLoggedIn"><a href="/register">Register</a></li>
-          <li class="nav-link" v-if="isLoggedIn" style="cursor: pointer"><span @click="logout">Logout</span></li>
-        </ul>
+
+        <!-- router link navigates without refreshing the pages -->
+        <router-link tag="li" class="nav-link" active-class="active" to="/about">About Us</router-link> |
+
+        <!-- href="javascript:void(0)" -->
+        <span v-if="isLoggedIn">
+          <a class="nav-link" @click="logout">Logout</a>
+        </span>
+        <span v-else>
+          <router-link tag="li" class="nav-link" active-class="active" to="/login">Login</router-link> |
+        <router-link tag="li" class="nav-link" active-class="active" to="/register">Register</router-link>
+        </span>
       </v-app-bar>
     </div>
     <router-view />
@@ -58,33 +64,26 @@ export default {
   name: 'App',
 
   created() {
-    this.$http.interceptors.response.use(undefined, function(err) {
-      return new Promise((resolve, reject) => {
-        if(err.status === 401 && err.config && !err.config.__isRetryRequest) {
-          this.$store.dispatch('logout').then(() => {
-            this.$router.push('/login')
-          })
-        }
-        throw err
-      })
-    })
-  },
-
-  computed: {
-    isLoggedIn() {
-      return this.$store.getters.isLoggedIn
-    }
+    let userData = this.$store.getters.user
+    this.name = userData.user.name
   },
 
   data() {
     return {
+      name: ''
+    }
+  },
 
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isAuthenticated
     }
   },
 
   methods: {
     async logout() {
-      await this.$store.dispatch('logout')
+      await this.$store.dispatch('Logout')
+      this.$router.push('/login')
     }
   }
 }
@@ -105,23 +104,20 @@ export default {
   cursor: pointer;
 }
 
-.nav-links {
+.nav-link {
   list-style-type: none;
 }
 
 .nav-link {
   display: inline-block;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
   margin: 0 1rem;
 }
 
-.nav-link a {
-  color: white;
-  text-decoration: none;
-}
-
-.nav-link a:hover,
-.nav-link span:hover,
-.nav-link a.active {
+.nav-link:hover,
+.nav-link.active {
   color: rgb(83, 83, 204);
 }
 </style>

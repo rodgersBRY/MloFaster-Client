@@ -8,6 +8,7 @@ export default {
         setLoading(state, payload) {
             state.loading = payload
         },
+
         setError(state, payload) {
             state.error = payload
         },
@@ -26,6 +27,7 @@ export default {
         loading(state) {
             return state.loading
         },
+
         error(state) {
             return state.error
         }

@@ -3,19 +3,19 @@
         <div
         class="details"
         v-for="i in hotels"
-        :key="i.id">
-            <div v-if="id === i.id">
+        :key="i._id">
+            <div v-if="id === i._id">
                 <div class="image">
                     <v-img
                     width="100%"
                     height="450"
-                    :src="i.img"
+                    :src="require('@/assets/ba.jpg')"
                     class="white--text pl-7 d-flex align-center justify-center">
                         <h1>{{ i.name }}</h1>
                         <div class="subtitle" style="width: 60%">{{ i.desc }}</div>
                         <div class="location" style="margin-top: 2rem">
                             <v-icon color="white" class="mr-3">mdi-map-marker</v-icon>
-                            {{ i.gps }}
+                            {{ i.email }} - {{ i.phoneNo }}
                         </div>
                     </v-img>
                 </div>
@@ -29,16 +29,16 @@
                         <h3>Cart Items</h3>
                         <v-list>
                             <v-list-item>
-                                <v-item-content>
+                                <v-list-item-content>
                                     <v-list-item-title class="grey--text">
                                         Product
                                     </v-list-item-title>
-                                </v-item-content>
-                                <v-item-content class="ml-10">
+                                </v-list-item-content>
+                                <v-list-item-content class="ml-10">
                                     <v-list-item-title class="grey--text">
                                         Price
                                     </v-list-item-title>
-                                </v-item-content>
+                                </v-list-item-content>
                             </v-list-item>
 
                             <v-list-item v-for="item in cartItems" :key="item.id">
@@ -48,9 +48,9 @@
                                     </v-list-item-title>
                                 </v-list-item-content>
                                 <v-list-item-content class="ml-1">
-                                    <v-list-item-text>
+                                    <v-list-item-subtitle>
                                         Ksh. {{ item.price }}
-                                    </v-list-item-text>
+                                    </v-list-item-subtitle>
                                 </v-list-item-content>
                                 <v-list-item-content>
                                     <v-btn text>
@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import NewMenuItem from './new-menu-item'
+import NewMenuItem from './forms/new-menu-item'
 
 export default {
     components: {
@@ -124,15 +124,6 @@ export default {
     data() {
         return {
             id: this.$route.params.Hid,
-
-            hotels: [
-                {id: 1, img: require('../assets/images/Ugali.jpg'), name: 'Black Africa', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Nairobi - CBD' },
-                {id: 2, img: require('../assets/images/avocado.jpg'), name: 'Art Cafe`', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Westgate - Westlands' },
-                {id: 3, img: require('../assets/images/beans.jpg'), name: 'Java House', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Sarit Centre - Westlands' },
-                {id: 4, img: require('../assets/images/kebab.jpg'), name: 'Da\' Place', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Juja' },
-                {id: 5, img: require('../assets/images/peas.jpg'), name: 'Moyo\'s', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Kahawa Sukari' },
-                {id: 6, img: require('../assets/images/rice.jpg'), name: 'Buma', desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus maxime nobis, ullam eaque consequatur rem veniam.', gps: 'Nkubu - Meru' }
-            ],
 
             cartItems: [
                 {id: 1, title: 'Fries', price: '40' },
@@ -157,22 +148,13 @@ export default {
 
     computed: {
     isLoggedIn() {
-      return this.$store.getters.isLoggedIn
-    }
-  },
+      return this.$store.getters.isAuthenticated
+    },
 
-    methods: {
-        // minusQuantity() {
-        //     if(this.menuItems[0].quantity > 0) {
-        //         q = this.menuItems[0].quantity--
-        //         this.menuItems[0].quantity = q
-        //     }
-        // },
-        // addQuantity() {
-        //     q = this.menuItems[0].quantity++
-        //     this.menuItems[0].quantity = q
-        // }
+    hotels() {
+        return this.$store.getters.hotels
     }
+  }
 }
 </script>
 
