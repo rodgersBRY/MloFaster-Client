@@ -6,24 +6,24 @@ export default {
     },
 
     actions: {
-        async loadedHotels({ commit }) {
-            commit('setLoading', true)
+        async loadHotels({ commit }) {
             const hotels = await Axios.get('/hotels')
             commit('setHotels', hotels.data.hotels)
         },
 
         async createHotel({ commit }, payload) {
-            commit('setLoading', true)
             const res = await Axios.post('/hotels/add', payload)
-            
             commit('createHotel', res.data.hotel)
-            commit('setLoading', false)     
         }
     },
 
     mutations: {
         setHotels(state, payload) {
             state.hotels = payload
+        },
+
+        clearHotels(state) {
+            state.hotels = []
         },
 
         createHotel(state, payload) {

@@ -4,6 +4,7 @@
       <v-card class="form">
         <v-card-title class="headline">Sign Up</v-card-title>
         <v-card-text>Create an account to enjoy the Services</v-card-text>
+        <p v-if="showError" class="warning--text pa-4">Something you enetered is incorrect</p>
         <div>
           <v-text-field label="Name" dense v-model="form.name" color="teal" />
           <v-text-field
@@ -45,6 +46,7 @@
           <v-btn color="teal darken-1" text type="submit">
             Submit
           </v-btn>
+          
         </v-card-actions>
       </v-card>
     </form>

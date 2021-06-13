@@ -19,17 +19,6 @@ if(token) {
   Vue.prototype.$http.defaults.headers.common['Authorization'] ='Bearer ' + token
 }
 
-// Axios.interceptors.response.use(undefined, function(err) {
-//   if(err) {
-//     const originalRequest = err.config
-//     if(err.response.status = 401 && !originalRequest._retry) {
-//       originalRequest._retry = true
-//       store.dispatch('logout')
-//       return router.push('/login')
-//     }
-//   }
-// })
-
 Vue.component('app-footer', Footer)
 Vue.component('app-alert', Alert)
 
@@ -39,5 +28,8 @@ new Vue({
   router,
   store,
   vuetify,
-  render: h => h(App)
+  render: h => h(App),
+  created() {
+    this.$store.dispatch('loadHotels')
+  }
 }).$mount('#app')

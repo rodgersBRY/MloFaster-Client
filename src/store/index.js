@@ -6,6 +6,7 @@ import createPersistedState from 'vuex-persistedstate'
 import auth from './modules/auth'
 import hotels from './modules/hotels'
 import shared from './modules/shared'
+import menuItems from './modules/menuItem'
 
 Vue.use(Vuex)
 
@@ -13,7 +14,8 @@ export const store = new Vuex.Store({
   modules: {
     auth,
     hotels,
-    shared
+    shared,
+    menuItems
   },
   plugins: [createPersistedState()] // deal with Vuex resetting after refreshing 
 })

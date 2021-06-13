@@ -75,32 +75,27 @@
                         </div>
                     </div>
                     <div
-                    class="list-item d-flex justify-space-between align-center mb-5"
                     v-for="item in menuItems"
-                    :key="item.id">
-                        <v-avatar tile size="100" color="teal">
-                            <v-img :src="item.img" />
-                        </v-avatar>     
-                        <div class="subtitle">
-                            <p class="subtitle">{{ item.title }}</p>
-                        </div>
-                        <div>
-                            <p>Ksh. {{ item.price }}</p>
-                            <div class="d-flex align-center">
-                                <v-btn icon color="warning">
-                                    <i class="bx bx-minus bx-sm"></i>    
-                                </v-btn>
-                                <div class="mx-3">
-                                    {{ item.quantity }}
+                    :key="item._id">
+                        <div 
+                        class="list-item d-flex justify-space-between align-center mb-5"
+                        v-if="id === item.hotelId">
+                            <v-avatar tile size="100" color="teal">
+                            <!-- <v-img :src="item.img" /> -->
+                            </v-avatar>
+                            <div class="subtitle">
+                                <p class="subtitle">{{ item.name }}</p>
+                            </div>
+                            <div>
+                                <p>Ksh. {{ item.price }}</p>
+                                <div class="d-flex align-center">
+                                    <v-btn outlined color="warning">
+                                        <i class="bx bxs-cart-alt bx-sm"></i>Add to Cart
+                                    </v-btn>
                                 </div>
-                                <v-btn icon color="warning">
-                                    <i class="bx bx-plus bx-sm"></i>
-                                </v-btn>
-                                <v-btn icon color="success" disabled>
-                                    <i class="bx bx-check bx-sm"></i>
-                                </v-btn>
                             </div>
                         </div>
+                        
                     </div>
 
                 </div>
@@ -133,28 +128,37 @@ export default {
                 {id: 5, title: 'RIce Beef', price: '90' }
             ],
 
-            quantity: 0,
             disabled: true,
-
-            menuItems: [
-                {id: 1, img: require('../assets/images/beans.jpg'), title: 'Chapo Beans', price: '50', quantity: 0 },
-                {id: 2, img: require('../assets/images/avocado.jpg'), title: 'Fries', price: '80', quantity: 0 },
-                {id: 3, img: require('../assets/images/kebab.jpg'), title: 'Rice Beef', price: '80', quantity: 0 },
-                {id: 4, img: require('../assets/images/peas.jpg'), title: 'Rice Ndengu', price: '50', quantity: 0 },
-                {id: 5, img: require('../assets/images/Ugali.jpg'), title: 'Viazi Karai', price: '10', quantity: 0 },
-            ]
         }
     },
 
     computed: {
-    isLoggedIn() {
-      return this.$store.getters.isAuthenticated
+        isLoggedIn() {
+            return this.$store.getters.isAuthenticated
+        },
+
+        hotels() {
+            return this.$store.getters.hotels
+        },
+
+        menuItems() {
+            return this.$store.getters.items
+        }
     },
 
-    hotels() {
-        return this.$store.getters.hotels
+    methods: {
+        addQuantity() {
+            this.quantity = this.quantity + 1
+            this.disabled = false
+        },
+
+        reduceQuantity() {
+            if(this.quantity > 0) {
+                this.quantity -= 1
+            }
+            this.disabled = true
+        }
     }
-  }
 }
 </script>
 

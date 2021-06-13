@@ -29,7 +29,7 @@
                         Submit
                         </v-btn>
                     </v-card-actions>
-                    <p v-if="showError" class="warning pa-4">Username or Password is incorrect</p>
+                    <p v-if="showError" class="warning--text pa-4">Username or Password is incorrect!</p>
                 </v-card>
             </form>
         </div>
@@ -56,8 +56,16 @@ export default {
     },
 
     computed: {
-        loading() {
-            return this.$store.getters.loading
+        user() {
+            return this.$store.getters.user
+        },
+    },
+
+    watch: {
+        user(value) {
+            if(value !== null && value !== undefined) {
+                this.$router.push('/')
+            }
         }
     },
 
@@ -70,7 +78,7 @@ export default {
             User.append('password', this.form.password)
             try {
                 await this.Login(User)
-                this.$router.push('/')
+                // this.$router.push('/')
                 this.showError = false
             } catch(err) {
                 this.showError = true

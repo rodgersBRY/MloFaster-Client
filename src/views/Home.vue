@@ -25,7 +25,7 @@
           </v-list-item-content>
 
           <v-list-item-avatar tile size="100" color="grey">
-            <v-img></v-img>
+            <v-img :src="ht.imageUrl" :alt="ht.name"></v-img>
           </v-list-item-avatar>
         </v-list-item>
       </v-card>

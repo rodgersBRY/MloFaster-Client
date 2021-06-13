@@ -5,7 +5,7 @@
             New Menu Item
         </v-btn>
         <v-dialog v-model="dialog" width="500" persistent>
-            <form @submit.prevent="submit">
+            <form @submit.prevent="addMenu">
                 <v-card class="pa-8">
                     <div class="mb-5 d-flex justify-space-between">
                         <h2>Add New Menu Item</h2>
@@ -24,11 +24,10 @@
                     <div class="form mb-3">
                         <v-text-field type="text" dense label="Item Name" class="input" v-model="form.name" color="teal" />
                         <v-text-field type="text" dense label="Item Price" class="input" v-model="form.price" color="teal" />
-                        <v-textarea no-resize type="text" dense label="Description" class="input" v-model="form.desc" color="teal" />
                     </div>
                     <v-card-actions>
                         <v-spacer />
-                        <v-btn color="warning" text type="submit">submit</v-btn>
+                        <v-btn color="warning" text type="submit">Add to Menu</v-btn>
                     </v-card-actions>
                 </v-card>
             </form>
@@ -38,6 +37,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+
 export default {
     data() {
         return {
@@ -45,18 +45,21 @@ export default {
 
             form: {
                 name: '',
-                desc: '',
-                price: ''
-            }
+                price: '',
+                id: this.$route.params.Hid
+            },
+
         }
     },
 
     methods: {
-        ...mapActions(['']),
+        ...mapActions(['createMenuItem']),
 
-        async submit() {
-            
-            
+        async addMenu() {
+            await this.createMenuItem(this.form)
+            this.form.name = ''
+            this.form.price = ''
+            this.dialog = false
         }
     }
 }

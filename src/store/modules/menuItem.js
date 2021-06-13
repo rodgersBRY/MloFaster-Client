@@ -12,20 +12,33 @@ export default {
 
         createMenuItem(state, payload) {
             state.menuItems.push(payload)
+        },
+
+        clearMenuItems(state) {
+            state.menuItems = []
         }
     },
 
     actions: {
-        async loadedMenuItems({ commit }) {
-            commit('setLoading', true)
-
+        async loadMenuItems({ commit }) {
             try {
-                const items = await Axios.get('/menuItems')
+                const items = await Axios.get('/menu-items')
+                console.log(items.data.menuItems)
                 commit('setMenuItems', items.data.menuItems)
-                commit('setLoading', false)
             } catch(err) {
                 commit('setError', err.response.data)
-                commit('setLoading', false)
+            }
+        },
+
+        async createMenuItem({ commit, dispatch }, payload) {
+            const hotelId = payload.id
+            
+            try {
+                const menuItem = await Axios.post(`/menu-items/add/${hotelId}`, payload)
+                commit('createMenuItem', menuItem.data.menuItem)
+                await dispatch('loadMenuItems')
+            } catch(err) {
+                commit('setError', err)
             }
         }
     },
