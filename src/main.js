@@ -14,6 +14,7 @@ Axios.defaults.baseURL = 'http://localhost:4000'
 
 Vue.prototype.$http = Axios
 
+// Auto authentication
 const token = localStorage.getItem('token')
 if(token) {
   Vue.prototype.$http.defaults.headers.common['Authorization'] ='Bearer ' + token

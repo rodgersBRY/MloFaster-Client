@@ -60,12 +60,25 @@
 </template>
 
 <script>
+import Axios from 'axios'
+
 export default {
   name: 'App',
 
   created() {
     let userData = this.$store.getters.user
     this.name = userData.user.name
+
+    // token expired, user unauthorized
+    Axios.interceptors.response.use(undefined, function (err) {
+      return new Promise(() => {
+        if(err.status === 401 && err.config && !err.config.__isRetryRequest) {
+          // if you ever get an unauthorized, logout the user
+          this.$store.dispatch('Logout')
+        }
+        throw err
+      })
+    })
   },
 
   data() {

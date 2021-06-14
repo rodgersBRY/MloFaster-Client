@@ -30,13 +30,12 @@ export default {
             }
         },
 
-        async createMenuItem({ commit, dispatch }, payload) {
+        async createMenuItem({ commit }, payload) {
             const hotelId = payload.id
             
             try {
                 const menuItem = await Axios.post(`/menu-items/add/${hotelId}`, payload)
                 commit('createMenuItem', menuItem.data.menuItem)
-                await dispatch('loadMenuItems')
             } catch(err) {
                 commit('setError', err)
             }

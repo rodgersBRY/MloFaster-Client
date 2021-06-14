@@ -6,9 +6,10 @@ export default {
     },
 
     actions: {
-        async loadHotels({ commit }) {
+        async loadHotels({ commit, dispatch }) {
             const hotels = await Axios.get('/hotels')
             commit('setHotels', hotels.data.hotels)
+            await dispatch('loadMenuItems')
         },
 
         async createHotel({ commit }, payload) {
