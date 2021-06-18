@@ -87,6 +87,16 @@
     </div>
 </template>
 
+<script>
+export default {
+    data() {
+        return {
+            
+        }
+    }
+}
+</script>
+
 <style scoped>
 .newsletter {
     background-color: rgb(63, 101, 138);

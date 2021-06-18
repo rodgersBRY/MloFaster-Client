@@ -23,7 +23,6 @@ export default {
         async loadMenuItems({ commit }) {
             try {
                 const items = await Axios.get('/menu-items')
-                console.log(items.data.menuItems)
                 commit('setMenuItems', items.data.menuItems)
             } catch(err) {
                 commit('setError', err.response.data)
@@ -43,6 +42,6 @@ export default {
     },
 
     getters: {
-        items: state => state.menuItems
+        menuItems: state => state.menuItems
     }
 }

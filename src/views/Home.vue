@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="add-hotel mt-7 d-flex justify-end mx-12" v-if="isLoggedIn">
+    <div class="add-hotel mt-7 d-flex justify-end mx-12" v-if="isAuthenticated">
       <new-hotel />
     </div>
     <!-- list of hotels -->
@@ -24,8 +24,8 @@
             </v-list-item-subtitle>
           </v-list-item-content>
 
-          <v-list-item-avatar tile size="100" color="grey">
-            <v-img :src="ht.imageUrl" :alt="ht.name"></v-img>
+          <v-list-item-avatar tile size="100" color="grey lighten-2 d-flex justify-center">
+            <i class="bx bx-hotel bx-md"></i>
           </v-list-item-avatar>
         </v-list-item>
       </v-card>
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import NewHotel from "@/components/forms/New-hotel";
 
 export default {
@@ -49,13 +50,7 @@ export default {
   },
 
   computed: {
-    isLoggedIn() {
-      return this.$store.getters.isAuthenticated
-    },
-
-    hotels() {
-      return this.$store.getters.hotels;
-    }
+    ...mapGetters(['isAuthenticated', 'hotels']),
   },
 
   methods: {

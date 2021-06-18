@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     data() {
@@ -56,9 +56,7 @@ export default {
     },
 
     computed: {
-        user() {
-            return this.$store.getters.user
-        },
+        ...mapGetters(['user']),
     },
 
     watch: {

@@ -46,7 +46,7 @@
         <router-link tag="li" class="nav-link" active-class="active" to="/about">About Us</router-link> |
 
         <!-- href="javascript:void(0)" -->
-        <span v-if="isLoggedIn">
+        <span v-if="isAuthenticated">
           <a class="nav-link" @click="logout">Logout</a>
         </span>
         <span v-else>
@@ -61,6 +61,7 @@
 
 <script>
 import Axios from 'axios'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'App',
@@ -88,14 +89,19 @@ export default {
   },
 
   computed: {
-    isLoggedIn() {
-      return this.$store.getters.isAuthenticated
-    }
+    ...mapGetters(['isAuthenticated']),
+
+    loadMenuItems() {
+      return this.$store.dispatch('loadMenuItems')
+    },
+    
   },
 
   methods: {
+    ...mapActions(['Logout']),
+
     async logout() {
-      await this.$store.dispatch('Logout')
+      await this.Logout()
       this.$router.push('/login')
     }
   }

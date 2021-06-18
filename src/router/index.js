@@ -27,7 +27,10 @@ const routes = [
   {
     path: '/hotel/:Hid',
     name: 'Hotel',
-    component: () => import('../components/Hotel.vue')
+    component: () => import('../components/Hotel.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/cart',

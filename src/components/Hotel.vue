@@ -14,7 +14,7 @@
                         <h1>{{ i.name }}</h1>
                         <div class="subtitle" style="width: 60%">{{ i.desc }}</div>
                         <div class="location" style="margin-top: 2rem">
-                            <v-icon color="white" class="mr-3">mdi-map-marker</v-icon>
+                            <v-icon color="white" class="mr-3" size="40">mdi-card-account-mail</v-icon>
                             {{ i.email }} - {{ i.phoneNo }}
                         </div>
                     </v-img>
@@ -70,7 +70,7 @@
                 <div class="main-content">
                     <div class="d-flex justify-space-between mb-4" style="width: 60%">
                         <h2 class="mb-4">Menu Items</h2>
-                        <div class="add-hotel" v-if="isLoggedIn">
+                        <div class="add-hotel" v-if="isAuthenticated">
                             <new-menu-item />
                         </div>
                     </div>
@@ -80,24 +80,19 @@
                         <div 
                         class="list-item d-flex justify-space-between align-center mb-5"
                         v-if="id === item.hotelId">
-                            <v-avatar tile size="100" color="teal">
-                            <!-- <v-img :src="item.img" /> -->
-                            </v-avatar>
                             <div class="subtitle">
                                 <p class="subtitle">{{ item.name }}</p>
                             </div>
                             <div>
                                 <p>Ksh. {{ item.price }}</p>
                                 <div class="d-flex align-center">
-                                    <v-btn outlined color="warning">
+                                    <v-btn outlined color="warning" @click="addToBag(item._id)">
                                         <i class="bx bxs-cart-alt bx-sm"></i>Add to Cart
                                     </v-btn>
                                 </div>
                             </div>
                         </div>
-                        
                     </div>
-
                 </div>
 
                 <div class="footer">
@@ -110,6 +105,7 @@
 
 <script>
 import NewMenuItem from './forms/new-menu-item'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     components: {
@@ -133,30 +129,15 @@ export default {
     },
 
     computed: {
-        isLoggedIn() {
-            return this.$store.getters.isAuthenticated
-        },
-
-        hotels() {
-            return this.$store.getters.hotels
-        },
-
-        menuItems() {
-            return this.$store.getters.items
-        }
+        ...mapGetters(['isAuthenticated', 'hotels', 'menuItems']),
     },
 
     methods: {
-        addQuantity() {
-            this.quantity = this.quantity + 1
-            this.disabled = false
-        },
+        ...mapActions(['addItemToCart']),
 
-        reduceQuantity() {
-            if(this.quantity > 0) {
-                this.quantity -= 1
-            }
-            this.disabled = true
+        async addToBag(itemId) {
+            console.log(itemId)
+            await this.addItemToCart(itemId)
         }
     }
 }

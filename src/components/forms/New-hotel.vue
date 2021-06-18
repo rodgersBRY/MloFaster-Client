@@ -8,7 +8,7 @@
             <!-- <v-flex>
                 <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
             </v-flex> -->
-            <form @submit.prevent="submit">
+            <form @submit.prevent="submit" enctype="multipart/form-data">
                 <v-card class="pa-8">
                     <div class="mb-5 d-flex justify-space-between">
                         <h2>Add New Hotel</h2>
@@ -28,7 +28,7 @@
                         <v-text-field type="text" dense label="Hotel Name" class="input" v-model="form.name" color="teal" />
                         <v-text-field type="email" dense label="E-Mail" class="input" v-model="form.email" color="teal" placeholder="hotel@example.com" />
                         <v-text-field type="text" dense label="Business Number" class="input" v-model="form.phoneNo" color="teal" placeholder="712345678" />
-                        <!-- <input type="file" label="Upload an Image" class="input mb-3" color="teal" @change="onFileSelected" name="image" /> -->
+                        <!-- <input type="file" class="input mb-3" @change="onFileSelected" name="image" /> -->
                         <v-textarea no-resize type="text" dense label="Description" class="input" v-model="form.description" color="teal" />
                     </div>
                     <v-card-actions>
@@ -51,14 +51,11 @@ export default {
     data() {
         return {
             dialog: false,
-            
-
             form: {
                 name: '',
                 email: '',
                 phoneNo: '',
                 description: '',
-                // image: null
             }
         }
     },
@@ -68,17 +65,8 @@ export default {
 
         async submit() {
             await this.createHotel(this.form)
-            this.form.name = ''
-            this.form.email = ''
-            this.form.phoneNo = ''
-            this.form.description = ''
             this.dialog = false
-        },
-
-        // onFileSelected(e) {
-        //     console.log(e.target.files[0])
-        //     this.form.image = e.target.files[0]
-        // }
+        }
     }
 }
 </script>

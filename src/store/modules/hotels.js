@@ -23,10 +23,6 @@ export default {
             state.hotels = payload
         },
 
-        clearHotels(state) {
-            state.hotels = []
-        },
-
         createHotel(state, payload) {
             state.hotels.push(payload)
         }
