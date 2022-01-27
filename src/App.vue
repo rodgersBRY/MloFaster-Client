@@ -3,17 +3,27 @@
     <div class="nav-bar">
       <v-app-bar dark color="teal" class="app-bar">
         <div class="logo" @click="$router.push('/')">
-          <v-img width="170" class="logo-img" :src="require('@/assets/logo1.png')"></v-img>
+          <v-img
+            width="170"
+            class="logo-img"
+            :src="require('@/assets/logo1.png')"
+          ></v-img>
         </div>
         <v-spacer />
         <div class="cart">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-avatar size="50" color="grey" class="mr-3" v-on="on" v-bind="attrs">
+              <v-avatar
+                size="50"
+                color="grey"
+                class="mr-3"
+                v-on="on"
+                v-bind="attrs"
+              >
                 <v-img :src="require('@/assets/profile-pic.jpg')"></v-img>
               </v-avatar>
             </template>
-            <span>{{ name }}</span>
+            <!-- <span>{{ $store.state.user.user.name }}</span> -->
           </v-tooltip>
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -33,7 +43,14 @@
           </v-tooltip>
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn icon dark class="mr-3" v-bind="attrs" v-on="on" to="/orders">
+              <v-btn
+                icon
+                dark
+                class="mr-3"
+                v-bind="attrs"
+                v-on="on"
+                to="/orders"
+              >
                 <i class="bx bxs-basket bx-sm"></i>
               </v-btn>
             </template>
@@ -43,15 +60,31 @@
         <v-spacer />
 
         <!-- router link navigates without refreshing the pages -->
-        <router-link tag="li" class="nav-link" active-class="active" to="/about">About Us</router-link> |
+        <router-link tag="li" class="nav-link" active-class="active" to="/about"
+          >About Us</router-link
+        >
+        |
 
         <!-- href="javascript:void(0)" -->
         <span v-if="isAuthenticated">
           <a class="nav-link" @click="logout">Logout</a>
         </span>
         <span v-else>
-          <router-link tag="li" class="nav-link" active-class="active" to="/login">Login</router-link> |
-        <router-link tag="li" class="nav-link" active-class="active" to="/register">Register</router-link>
+          <router-link
+            tag="li"
+            class="nav-link"
+            active-class="active"
+            to="/login"
+            >Login</router-link
+          >
+          |
+          <router-link
+            tag="li"
+            class="nav-link"
+            active-class="active"
+            to="/register"
+            >Register</router-link
+          >
         </span>
       </v-app-bar>
     </div>
@@ -60,52 +93,29 @@
 </template>
 
 <script>
-import Axios from 'axios'
-import { mapGetters, mapActions } from 'vuex'
+import Axios from "axios";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
-  name: 'App',
+  name: "App",
 
   created() {
-    let userData = this.$store.getters.user
-    this.name = userData.user.name
-
-    // token expired, user unauthorized
-    Axios.interceptors.response.use(undefined, function (err) {
-      return new Promise(() => {
-        if(err.status === 401 && err.config && !err.config.__isRetryRequest) {
-          // if you ever get an unauthorized, logout the user
-          this.$store.dispatch('Logout')
-        }
-        throw err
-      })
-    })
-  },
-
-  data() {
-    return {
-      name: ''
-    }
+    return this.$store.dispatch("loadCartItems");
   },
 
   computed: {
-    ...mapGetters(['isAuthenticated']),
-
-    loadMenuItems() {
-      return this.$store.dispatch('loadMenuItems')
-    },
-    
+    ...mapGetters(["isAuthenticated"]),
   },
 
   methods: {
-    ...mapActions(['Logout']),
+    ...mapActions(["Logout"]),
 
     async logout() {
-      await this.Logout()
-      this.$router.push('/login')
-    }
-  }
-}
+      await this.Logout();
+      this.$router.push("/login");
+    },
+  },
+};
 </script>
 
 <style scoped>

@@ -1,34 +1,42 @@
-import Axios from "axios"
+import Axios from "axios";
 
 export default {
-    state: {
-        hotels: []
+  state: {
+    hotels: [],
+  },
+
+  actions: {
+    async loadHotels({ commit }) {
+      const hotels = await Axios.get("/hotels");
+      commit("setHotels", hotels.data.hotels);
     },
 
-    actions: {
-        async loadHotels({ commit, dispatch }) {
-            const hotels = await Axios.get('/hotels')
-            commit('setHotels', hotels.data.hotels)
-            await dispatch('loadMenuItems')
-        },
+    async createHotel({ commit }, payload) {
+      try {
+        commit("setLoading", true);
 
-        async createHotel({ commit }, payload) {
-            const res = await Axios.post('/hotels/add', payload)
-            commit('createHotel', res.data.hotel)
-        }
+        const res = await Axios.post("/hotels/add", payload);
+        
+        commit("setLoading", false);
+        commit("createHotel", res.data.hotel);
+      } catch (e) {
+        commit("setLoading", false);
+        commit("setError", e);
+      }
+    },
+  },
+
+  mutations: {
+    setHotels(state, hotels) {
+      state.hotels = hotels;
     },
 
-    mutations: {
-        setHotels(state, payload) {
-            state.hotels = payload
-        },
-
-        createHotel(state, payload) {
-            state.hotels.push(payload)
-        }
+    createHotel(state, hotel) {
+      state.hotels.push(hotel);
     },
+  },
 
-    getters: {
-        hotels: state => state.hotels
-    }
-}
+  getters: {
+    hotels: (state) => state.hotels,
+  },
+};

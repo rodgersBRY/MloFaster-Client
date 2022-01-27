@@ -1,36 +1,48 @@
-import Vue from 'vue'
-import App from './App.vue'
-import './registerServiceWorker'
-import router from './router'
-import Axios from 'axios'
-import { store } from './store'
-import vuetify from './plugins/vuetify'
+import Vue from "vue";
+import App from "./App.vue";
+import "./registerServiceWorker";
+import router from "./router";
+import Axios from "axios";
+import { store } from "./store";
+import vuetify from "./plugins/vuetify";
 
-import Footer from './components/Footer.vue'
-import Alert from './components/shared/alert.vue'
+import Footer from "./components/Footer.vue";
+import Alert from "./components/shared/alert.vue";
 
-Axios.defaults.withCredentials = false
-Axios.defaults.baseURL = 'http://localhost:4000'
+Axios.defaults.withCredentials = false;
+Axios.defaults.baseURL = "http://localhost:4000";
 
-Vue.prototype.$http = Axios
+Axios.interceptors.response.use(undefined, (err) => {
+  if (err) {
+    const originalRequest = err.config;
+    if (err.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      store.dispatch("Logout");
+      return router.push("/login");
+    }
+  }
+});
+
+Vue.prototype.$http = Axios;
 
 // Auto authentication
-const token = localStorage.getItem('token')
-if(token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] ='Bearer ' + token
+const token = localStorage.getItem("token");
+if (token) {
+  Vue.prototype.$http.defaults.headers.common["Authorization"] =
+    "Bearer " + token;
 }
 
-Vue.component('app-footer', Footer)
-Vue.component('app-alert', Alert)
+Vue.component("app-footer", Footer);
+Vue.component("app-alert", Alert);
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
   vuetify,
-  render: h => h(App),
+  render: (h) => h(App),
   created() {
-    this.$store.dispatch('loadHotels')
-  }
-}).$mount('#app')
+    this.$store.dispatch("loadHotels");
+  },
+}).$mount("#app");
