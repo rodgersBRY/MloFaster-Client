@@ -3,6 +3,7 @@ import axios from "axios";
 export default {
   state: {
     cartItems: [],
+    totalAmount: 0,
   },
 
   mutations: {
@@ -40,8 +41,17 @@ export default {
     },
 
     async removeCartItem({ commit }, cartItem) {
-      const res = await axios.delete("", cartItem);
-      commit("updateCartItems", res.data);
+      const itemId = cartItem;
+      const res = await axios.delete(`/cart/${itemId}`);
+      commit("updateCartItems", res.data.cartItems);
+    },
+
+    async clearCart({ commit }) {
+      commit("setLoading", true);
+
+      const res = await axios.post("/cart/clear");
+      commit("clearCart");
+      commit("setLoading", false);
     },
   },
 

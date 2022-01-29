@@ -7,7 +7,6 @@ import { store } from "./store";
 import vuetify from "./plugins/vuetify";
 
 import Footer from "./components/Footer.vue";
-import Alert from "./components/shared/alert.vue";
 
 Axios.defaults.withCredentials = false;
 Axios.defaults.baseURL = "http://localhost:4000";
@@ -33,7 +32,6 @@ if (token) {
 }
 
 Vue.component("app-footer", Footer);
-Vue.component("app-alert", Alert);
 
 Vue.config.productionTip = false;
 

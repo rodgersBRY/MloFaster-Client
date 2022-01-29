@@ -11,20 +11,15 @@
         </div>
         <v-spacer />
         <div class="cart">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-avatar
-                size="50"
-                color="grey"
-                class="mr-3"
-                v-on="on"
-                v-bind="attrs"
-              >
-                <v-img :src="require('@/assets/profile-pic.jpg')"></v-img>
-              </v-avatar>
-            </template>
-            <!-- <span>{{ $store.state.user.user.name }}</span> -->
-          </v-tooltip>
+          <v-avatar
+            size="55"
+            color="warning"
+            class="mr-16"
+          >
+          <v-icon>mdi-account</v-icon>
+            <!-- <v-img :src="require('@/assets/profile-pic.jpg')"></v-img> -->
+          </v-avatar>
+
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon dark class="mr-3" v-bind="attrs" v-on="on" to="/cart">
@@ -93,7 +88,6 @@
 </template>
 
 <script>
-import Axios from "axios";
 import { mapGetters, mapActions } from "vuex";
 
 export default {

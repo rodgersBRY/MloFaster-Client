@@ -14,13 +14,15 @@
       >
         <v-list-item three-line>
           <v-list-item-content>
-            <div class="overline mb-4">{{ ht.email }} / {{ ht.phoneNo }}</div>
-            <v-list-item-title class="headline mb-1">
+            <v-list-item-subtitle class="font-weight-thin overline mb-4">
+              {{ ht.phoneNo }}
+            </v-list-item-subtitle>
+            <v-list-item-subtitle class="font-weight-light text-subtitle-3 mb-4">
+              {{ ht.email }}
+            </v-list-item-subtitle>
+            <v-list-item-title class="font-weight-black headline mb-1">
               {{ ht.name }}
             </v-list-item-title>
-            <v-list-item-subtitle>
-              {{ ht.desc }}
-            </v-list-item-subtitle>
           </v-list-item-content>
 
           <v-list-item-avatar

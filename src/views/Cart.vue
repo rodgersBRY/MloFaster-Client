@@ -12,6 +12,9 @@
           <v-list-item-content>
             <h3 class="headline">Quantity</h3>
           </v-list-item-content>
+          <v-list-item-content>
+            <!-- <h3 class="headline">Quantity</h3> -->
+          </v-list-item-content>
         </v-list-item>
         <v-divider class="mt-2" />
 
@@ -25,14 +28,24 @@
           <v-list-item-content>
             <v-list-item-title>Ksh. {{ item.price }}</v-list-item-title>
           </v-list-item-content>
+          <v-list-item-content>
+            <v-icon color="error" small @click="removeFromCart(item._id)"
+              >mdi-close</v-icon
+            >
+          </v-list-item-content>
         </v-list-item>
       </v-list>
 
       <div class="actions d-flex justify-end mt-10">
-        <v-btn depressed dark class="mr-4" color="teal" @click="makeOrder"
-          >Checkout & Order</v-btn
+        <checkout-order-btn :disabled="isLoading" />
+        <v-btn
+          depressed
+          dark
+          color="warning"
+          @click="clearCart"
+          
+          >Clear Cart</v-btn
         >
-        <v-btn depressed dark color="warning">Clear Cart</v-btn>
       </div>
     </v-sheet>
 
@@ -43,23 +56,31 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
+
 export default {
+  components: {
+    "checkout-order-btn": require("@/components/forms/checkout-dialog.vue")
+      .default,
+  },
+
   computed: {
-    ...mapGetters(["cartItems"]),
+    ...mapGetters(["cartItems", "isLoading"]),
   },
 
   methods: {
-    makeOrder() {
-      this.$router.push("/orders");
+    ...mapActions(["removeCartItem", "clearCart"]),
+
+    
+    removeFromCart(id) {
+      this.removeCartItem(id);
     },
   },
 };
 </script>
 
-<style scoped>
-.item-list {
-  width: 60%;
-  margin: 4rem auto;
-}
+<style lang="sass">
+.item-list
+  width: 60%
+  margin: 4rem auto
 </style>
