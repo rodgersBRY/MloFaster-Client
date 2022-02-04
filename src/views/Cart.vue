@@ -34,16 +34,35 @@
             >
           </v-list-item-content>
         </v-list-item>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title
+              >Total Price</v-list-item-title
+            > </v-list-item-content
+          ><v-spacer />
+          <v-list-item-content>
+            <v-list-item-subtitle class="title"
+              >Ksh. {{ totalPrice }}</v-list-item-subtitle
+            >
+          </v-list-item-content>
+
+          <v-list-item-content>
+            <v-list-item-title v-show="totalPrice == 0"
+              >Go ahead and shop</v-list-item-title
+            >
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
 
       <div class="actions d-flex justify-end mt-10">
-        <checkout-order-btn :disabled="isLoading" />
+        <checkout-order-btn v-show="totalPrice != 0" />
+
         <v-btn
           depressed
+          :disabled="totalPrice === 0"
           dark
           color="warning"
           @click="clearCart"
-          
           >Clear Cart</v-btn
         >
       </div>
@@ -66,15 +85,31 @@ export default {
 
   computed: {
     ...mapGetters(["cartItems", "isLoading"]),
+    totalPrice() {
+      var items = this.cartItems;
+      var total = 0;
+      for (let i = 0; i < items.length; i++) {
+        total += items[i].price * items[i].quantity;
+      }
+      return total;
+    },
   },
 
   methods: {
     ...mapActions(["removeCartItem", "clearCart"]),
 
-    
     removeFromCart(id) {
       this.removeCartItem(id);
     },
+    // totalPrice() {
+    //   var items = this.cartItems;
+    //   var total = 0;
+    //   for (let i = 0; i < items.length; i++) {
+    //     total += items[i].price;
+    //   }
+    //   console.log(`your total price is: ${total}`);
+    //   return total;
+    // },
   },
 };
 </script>

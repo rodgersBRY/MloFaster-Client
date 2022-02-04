@@ -5,7 +5,6 @@ import goTo from "vuetify/lib/services/goto";
 import Home from "../views/Home.vue";
 import Register from "../views/Auth/Register.vue";
 import Login from "../views/Auth/Login.vue";
-import { store } from "../store";
 
 Vue.use(VueRouter);
 

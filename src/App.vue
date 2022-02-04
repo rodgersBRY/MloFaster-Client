@@ -11,12 +11,8 @@
         </div>
         <v-spacer />
         <div class="cart">
-          <v-avatar
-            size="55"
-            color="warning"
-            class="mr-16"
-          >
-          <v-icon>mdi-account</v-icon>
+          <v-avatar size="55" color="warning" class="mr-16">
+            <v-icon>mdi-account</v-icon>
             <!-- <v-img :src="require('@/assets/profile-pic.jpg')"></v-img> -->
           </v-avatar>
 
@@ -88,7 +84,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "App",
@@ -102,11 +98,9 @@ export default {
   },
 
   methods: {
-    ...mapActions(["Logout"]),
-
     async logout() {
-      await this.Logout();
-      this.$router.push("/login");
+      this.$store.dispatch("Logout");
+      // this.$router.push("/login");
     },
   },
 };

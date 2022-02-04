@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -94,8 +93,6 @@ export default {
     orders() {
       return this.$store.dispatch("loadOrders");
     },
-    // ...mapActions(['loadOrders']),
-    // loadOrders()
   },
 
   created() {

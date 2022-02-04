@@ -17,7 +17,9 @@
             <v-list-item-subtitle class="font-weight-thin overline mb-4">
               {{ ht.phoneNo }}
             </v-list-item-subtitle>
-            <v-list-item-subtitle class="font-weight-light text-subtitle-3 mb-4">
+            <v-list-item-subtitle
+              class="font-weight-light text-subtitle-3 mb-4"
+            >
               {{ ht.email }}
             </v-list-item-subtitle>
             <v-list-item-title class="font-weight-black headline mb-1">
