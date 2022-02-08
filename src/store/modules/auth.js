@@ -25,6 +25,7 @@ export default {
         userForm.append("status", payload.status);
 
         await dispatch("Login", userForm);
+        commit("setError", null);
         commit("setLoading", false);
       } catch (err) {
         commit("setLoading", false);
@@ -32,7 +33,7 @@ export default {
       }
     },
 
-    async Login({ commit, dispatch }, User) {
+    async Login({ commit }, User) {
       try {
         commit("setLoading", true);
         const user = await Axios.post("/auth/login", {
@@ -45,11 +46,11 @@ export default {
         Axios.defaults.headers.common["Authorization"] = token;
 
         commit("setUser", user.data, token);
-        dispatch("loadCartItems");
+        commit("setError", null);
         commit("setLoading", false);
       } catch (err) {
-        commit("setLoading", false);
         commit("setError", err);
+        commit("setLoading", false);
         localStorage.removeItem("token");
       }
     },
@@ -71,6 +72,7 @@ export default {
     logout(state) {
       state.user = null;
       state.token = "";
+      state.error = null;
     },
   },
 };

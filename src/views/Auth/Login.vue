@@ -22,7 +22,10 @@
             />
           </div>
           <v-card-actions>
-            <v-spacer></v-spacer>
+            <div class="error--text" v-show="getError != null">
+              Check your details or register
+            </div>
+            <v-spacer />
             <v-btn
               color="teal darken-1"
               text
@@ -59,7 +62,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["user", "isLoading"]),
+    ...mapGetters(["user", "isLoading", "getError"]),
   },
 
   watch: {
@@ -74,13 +77,19 @@ export default {
     ...mapActions(["Login", "loadCartItems"]),
 
     async submit() {
-      const User = new FormData();
-      User.append("email", this.form.email);
-      User.append("password", this.form.password);
-      try {
-        await this.Login(User);
-        this.loadCartItems;
-      } catch (err) {}
+      if (this.form.email != "" && this.form.password != "") {
+        const User = new FormData();
+        User.append("email", this.form.email);
+        User.append("password", this.form.password);
+        try {
+          await this.Login(User);
+          this.loadCartItems;
+        } catch (err) {
+          alert(err);
+        }
+      } else {
+        alert("Please input your Email and Password");
+      }
     },
   },
 };

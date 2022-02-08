@@ -32,7 +32,7 @@
             size="100"
             color="grey lighten-2 d-flex justify-center"
           >
-            <i class="bx bx-hotel bx-md"></i>
+            <i class="bx bxs-food-menu bx-md bx-burst-hover"></i>
           </v-list-item-avatar>
         </v-list-item>
       </v-card>

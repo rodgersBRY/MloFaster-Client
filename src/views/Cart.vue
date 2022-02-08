@@ -101,15 +101,6 @@ export default {
     removeFromCart(id) {
       this.removeCartItem(id);
     },
-    // totalPrice() {
-    //   var items = this.cartItems;
-    //   var total = 0;
-    //   for (let i = 0; i < items.length; i++) {
-    //     total += items[i].price;
-    //   }
-    //   console.log(`your total price is: ${total}`);
-    //   return total;
-    // },
   },
 };
 </script>

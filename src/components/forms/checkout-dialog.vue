@@ -26,7 +26,9 @@
             @click="dialog = false"
             >cancel</v-btn
           >
-          <v-btn text :disabled="isLoading">submit</v-btn>
+          <v-btn text :disabled="isLoading" @click.stop="orderNow"
+            >submit</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -34,7 +36,9 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
+  props: ["checkout"],
   data() {
     return {
       dialog: false,
@@ -42,13 +46,15 @@ export default {
   },
 
   computed: {
-    isLoading() {
-      return this.$store.getters.isLoading;
-    },
+    ...mapGetters(["isLoading"]),
   },
 
   methods: {
-    makeOrder() {
+    ...mapActions(["makeOrder"]),
+
+    orderNow() {
+      this.makeOrder();
+      this.dialog = false;
       this.$router.push("/orders");
     },
   },

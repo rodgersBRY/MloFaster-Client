@@ -33,6 +33,7 @@
         </v-list-item>
       </v-list>
       <div>
+        Your Orders <br />
         {{ orders }}
       </div>
     </v-sheet>
@@ -44,55 +45,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
       today: Date.now,
-      cartItems: [
-        {
-          name: "Ugali & Sukuma",
-          desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-          price: "80",
-          quantity: "2",
-        },
-        {
-          name: "Chips Masala",
-          desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-          price: "200",
-          quantity: "1",
-        },
-        {
-          name: "Chicken Burger",
-          desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-          price: "300",
-          quantity: "2",
-        },
-        {
-          name: "Chips",
-          desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-          price: "100",
-          quantity: "3",
-        },
-        {
-          name: "Bhajia",
-          desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-          price: "130",
-          quantity: "1",
-        },
-        {
-          name: "Special",
-          desc: "Fries, 1/4 Chicken & Soda",
-          price: "250",
-          quantity: "1",
-        },
-      ],
+      cartItems: [],
     };
   },
 
   computed: {
-    orders() {
-      return this.$store.dispatch("loadOrders");
-    },
+    ...mapGetters(["orders"]),
   },
 
   created() {
@@ -104,6 +67,7 @@ export default {
       day: "numeric",
     };
     this.today = d.toLocaleString("en-US", options);
+    this.$store.dispatch("loadOrders");
   },
 };
 </script>

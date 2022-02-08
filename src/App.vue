@@ -100,7 +100,7 @@ export default {
   methods: {
     async logout() {
       this.$store.dispatch("Logout");
-      // this.$router.push("/login");
+      this.$router.push("/login");
     },
   },
 };
