@@ -1,6 +1,13 @@
 <template>
   <div class="checkout">
-    <v-btn depressed dark class="mr-4" color="teal" @click="dialog = true">
+    <v-btn
+      depressed
+      dark
+      class="mr-4"
+      color="teal"
+      @click="dialog = true"
+      :disabled="totalPrice === 0"
+    >
       Checkout & Order
     </v-btn>
     <v-dialog v-model="dialog" width="40%" persistent>
@@ -38,7 +45,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  props: ["checkout"],
+  props: ["checkout", "totalPrice"],
   data() {
     return {
       dialog: false,

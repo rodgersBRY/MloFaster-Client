@@ -7,35 +7,28 @@
             <h3 class="headline">Item</h3>
           </v-list-item-content>
           <v-list-item-content>
-            <h3 class="headline">Price</h3>
+            <h3 class="headline">Quantity</h3>
           </v-list-item-content>
           <v-list-item-content>
-            <h3 class="headline">Quantity</h3>
+            <h3 class="headline">Date of Order</h3>
           </v-list-item-content>
         </v-list-item>
         <v-divider class="mt-2" />
 
-        <v-list-item class="mt-2" v-for="(item, i) in cartItems" :key="i">
-          <v-list-item-avatar tile size="100">
-            <v-img :src="require('@/assets/images/Ugali.jpg')"></v-img>
-          </v-list-item-avatar>
-
-          <v-list-item-content>
-            <v-list-item-subtitle>Date: {{ today }}</v-list-item-subtitle>
-            <v-list-item-title v-text="item.name"></v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-content>
-            <v-list-item-title>Ksh. {{ item.price }}</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.quantity }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+        <div v-for="(order, i) in orders" :key="i">
+          <v-list-item v-for="ord in order.items" :key="ord._id">
+            <v-list-item-content>
+              <h3 class="subtitle">{{ ord.name }}</h3>
+            </v-list-item-content>
+            <v-list-item-content>
+              <p class="subtitle">{{ ord.quantity }}</p>
+            </v-list-item-content>
+            <v-list-item-content>
+              <p class="subtitle">{{ order.createdAt | convertDate }}</p>
+            </v-list-item-content>
+          </v-list-item>
+        </div>
       </v-list>
-      <div>
-        Your Orders <br />
-        {{ orders }}
-      </div>
     </v-sheet>
 
     <div class="footer">
@@ -45,28 +38,27 @@
 </template>
 
 <script>
+import { format } from "date-fns";
 import { mapGetters } from "vuex";
+
 export default {
-  data() {
-    return {
-      today: Date.now,
-      cartItems: [],
-    };
+
+  filters: {
+    convertDate(val) {
+      return format(new Date(val), "MMM dd yyyy");
+    },
   },
 
   computed: {
     ...mapGetters(["orders"]),
+
+    orderItems() {
+      console.log("hello world!");
+      let itemList = this.orders.items;
+    },
   },
 
   created() {
-    let d = new Date();
-    var options = {
-      weekday: "short",
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    };
-    this.today = d.toLocaleString("en-US", options);
     this.$store.dispatch("loadOrders");
   },
 };

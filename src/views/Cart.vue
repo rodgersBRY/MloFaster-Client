@@ -55,7 +55,7 @@
       </v-list>
 
       <div class="actions d-flex justify-end mt-10">
-        <checkout-order-btn v-show="totalPrice != 0" />
+        <checkout-order-btn :totalPrice="totalPrice" />
 
         <v-btn
           depressed

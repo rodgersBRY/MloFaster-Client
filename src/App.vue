@@ -18,9 +18,23 @@
 
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn icon dark class="mr-3" v-bind="attrs" v-on="on" to="/cart">
-                <i class="bx bxs-cart bx-sm"></i>
-              </v-btn>
+              <v-badge
+                :content="totalCartItems"
+                :value="totalCartItems > 0"
+                color="orange"
+                overlap
+              >
+                <v-btn
+                  icon
+                  dark
+                  class="mr-3"
+                  v-bind="attrs"
+                  v-on="on"
+                  to="/cart"
+                >
+                  <i class="bx bxs-cart bx-sm"></i>
+                </v-btn>
+              </v-badge>
             </template>
             <span>Cart</span>
           </v-tooltip>
@@ -94,7 +108,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["isAuthenticated"]),
+    ...mapGetters(["isAuthenticated", "cartItems"]),
+
+    totalCartItems() {
+      return this.cartItems.length;
+    },
   },
 
   methods: {
