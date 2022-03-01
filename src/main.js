@@ -11,17 +11,6 @@ import Footer from "./components/Footer.vue";
 Axios.defaults.withCredentials = false;
 Axios.defaults.baseURL = "http://localhost:4000";
 
-// Axios.interceptors.response.use(undefined, (err) => {
-//   if (err) {
-//     const originalRequest = err.config;
-//     if (err.response.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
-//       store.dispatch("Logout");
-//       return router.push("/login");
-//     }
-//   }
-// });
-
 Vue.prototype.$http = Axios;
 
 // Auto authentication

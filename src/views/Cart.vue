@@ -29,27 +29,28 @@
             <v-list-item-title>Ksh. {{ item.price }}</v-list-item-title>
           </v-list-item-content>
           <v-list-item-content>
-            <v-icon color="error" small @click="removeFromCart(item._id)"
-              >mdi-close</v-icon
-            >
+            <v-icon color="error" small @click="removeFromCart(item._id)">
+              mdi-close
+            </v-icon>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title
-              >Total Price</v-list-item-title
-            > </v-list-item-content
-          ><v-spacer />
-          <v-list-item-content>
-            <v-list-item-subtitle class="title"
-              >Ksh. {{ totalPrice }}</v-list-item-subtitle
-            >
-          </v-list-item-content>
 
+        <v-list-item class="mt-16">
           <v-list-item-content>
-            <v-list-item-title v-show="totalPrice == 0"
-              >Go ahead and shop</v-list-item-title
-            >
+            <v-list-item-title>Total Price</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item-subtitle class="title">
+              Ksh. {{ totalPrice }}
+            </v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item-subtitle class="title"></v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item-title v-show="totalPrice == 0">
+              Go ahead and shop
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -85,6 +86,7 @@ export default {
 
   computed: {
     ...mapGetters(["cartItems", "isLoading"]),
+
     totalPrice() {
       var items = this.cartItems;
       var total = 0;

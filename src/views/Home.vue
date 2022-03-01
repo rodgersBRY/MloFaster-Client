@@ -3,40 +3,44 @@
     <div class="add-hotel mt-7 d-flex justify-end mx-12" v-if="isAuthenticated">
       <new-hotel />
     </div>
+    
     <!-- list of hotels -->
-    <v-layout row wrap class="main-content">
-      <v-card
-        width="400"
-        class="my-3 mx-10"
-        v-for="ht in hotels"
-        :key="ht._id"
-        @click="toHotel(ht._id)"
-      >
-        <v-list-item three-line>
-          <v-list-item-content>
-            <v-list-item-subtitle class="font-weight-thin overline mb-4">
-              {{ ht.phoneNo }}
-            </v-list-item-subtitle>
-            <v-list-item-subtitle
-              class="font-weight-light text-subtitle-3 mb-4"
-            >
-              {{ ht.email }}
-            </v-list-item-subtitle>
-            <v-list-item-title class="font-weight-black headline mb-1">
-              {{ ht.name }}
-            </v-list-item-title>
-          </v-list-item-content>
+    <div class="main-content">
+      <v-layout row wrap>
+        <v-card
+          width="500"
+          class="my-3 mx-10"
+          v-for="ht in hotels"
+          :key="ht._id"
+          @click="toHotel(ht._id)"
+        >
+          <v-list-item three-line>
+            <v-list-item-content>
+              <v-list-item-subtitle class="font-weight-thin overline mb-4">
+                {{ ht.phoneNo }}
+              </v-list-item-subtitle>
+              <v-list-item-subtitle
+                class="font-weight-light text-subtitle-3 mb-4"
+              >
+                {{ ht.email }}
+              </v-list-item-subtitle>
+              <v-list-item-title class="font-weight-black headline mb-1">
+                {{ ht.name }}
+              </v-list-item-title>
+            </v-list-item-content>
 
-          <v-list-item-avatar
-            tile
-            size="100"
-            color="grey lighten-2 d-flex justify-center"
-          >
-            <i class="bx bxs-food-menu bx-md bx-burst-hover"></i>
-          </v-list-item-avatar>
-        </v-list-item>
-      </v-card>
-    </v-layout>
+            <v-list-item-avatar
+              tile
+              size="100"
+              color="grey lighten-2 d-flex justify-center"
+            >
+              <img :src="ht.imageUrl" alt="profile image" />
+            </v-list-item-avatar>
+          </v-list-item>
+        </v-card>
+      </v-layout>
+
+    </div>
 
     <!-- footer -->
     <div class="footer">

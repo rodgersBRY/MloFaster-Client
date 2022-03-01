@@ -1,7 +1,7 @@
 <template>
   <div class="orders">
     <v-sheet class="item-list pa-5">
-      <v-list three-line>
+      <v-list two-line>
         <v-list-item>
           <v-list-item-content>
             <h3 class="headline">Item</h3>
@@ -10,23 +10,32 @@
             <h3 class="headline">Quantity</h3>
           </v-list-item-content>
           <v-list-item-content>
+            <h3 class="headline">Price <br> (Total per Order)</h3>
+          </v-list-item-content>
+          <v-list-item-content>
             <h3 class="headline">Date of Order</h3>
           </v-list-item-content>
         </v-list-item>
-        <v-divider class="mt-2" />
+        <v-divider class="mt-2" color="black" />
 
         <div v-for="(order, i) in orders" :key="i">
           <v-list-item v-for="ord in order.items" :key="ord._id">
             <v-list-item-content>
-              <h3 class="subtitle">{{ ord.name }}</h3>
+              <h3 class="subtitle grey--text">{{ ord.name }}</h3>
             </v-list-item-content>
             <v-list-item-content>
-              <p class="subtitle">{{ ord.quantity }}</p>
+              <p class="subtitle grey--text">{{ ord.quantity }}</p>
             </v-list-item-content>
             <v-list-item-content>
-              <p class="subtitle">{{ order.createdAt | convertDate }}</p>
+              <p class="subtitle grey--text">Ksh. {{ ord.price }}</p>
+            </v-list-item-content>
+            <v-list-item-content>
+              <p class="subtitle grey--text">
+                {{ order.createdAt | convertDate }}
+              </p>
             </v-list-item-content>
           </v-list-item>
+          <v-divider />
         </div>
       </v-list>
     </v-sheet>
@@ -42,20 +51,14 @@ import { format } from "date-fns";
 import { mapGetters } from "vuex";
 
 export default {
-
   filters: {
     convertDate(val) {
-      return format(new Date(val), "MMM dd yyyy");
+      return format(new Date(val), "PPpp");
     },
   },
 
   computed: {
     ...mapGetters(["orders"]),
-
-    orderItems() {
-      console.log("hello world!");
-      let itemList = this.orders.items;
-    },
   },
 
   created() {

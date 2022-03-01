@@ -1,47 +1,52 @@
-import Axios from "axios"
+import Axios from "axios";
 
 export default {
-    state: {
-        menuItems: []
+  state: {
+    menuItems: [],
+  },
+
+  mutations: {
+    setMenuItems(state, payload) {
+      state.menuItems = payload;
     },
 
-    mutations: {
-        setMenuItems(state, payload) {
-            state.menuItems = payload
-        },
-
-        createMenuItem(state, payload) {
-            state.menuItems.push(payload)
-        },
-
-        clearMenuItems(state) {
-            state.menuItems = []
-        }
+    createMenuItem(state, payload) {
+      state.menuItems.push(payload);
     },
 
-    actions: {
-        async loadMenuItems({ commit }) {
-            try {
-                const items = await Axios.get('/menu-items')
-                commit('setMenuItems', items.data.menuItems)
-            } catch(err) {
-                commit('setError', err.response.data)
-            }
-        },
+    clearMenuItems(state) {
+      state.menuItems = [];
+    },
+  },
 
-        async createMenuItem({ commit }, payload) {
-            const hotelId = payload.id
-            
-            try {
-                const menuItem = await Axios.post(`/menu-items/add/${hotelId}`, payload)
-                commit('createMenuItem', menuItem.data.menuItem)
-            } catch(err) {
-                commit('setError', err)
-            }
-        }
+  actions: {
+    async loadMenuItems({ commit }) {
+      try {
+        const items = await Axios.get("/menu-items");
+        commit("setMenuItems", items.data.menuItems);
+        commit("setError", null);
+      } catch (err) {
+        commit("setError", err.response.data.message);
+      }
     },
 
-    getters: {
-        menuItems: state => state.menuItems
-    }
-}
+    async createMenuItem({ commit }, payload) {
+      const hotelId = payload.id;
+
+      try {
+        const menuItem = await Axios.post(
+          `/menu-items/add/${hotelId}`,
+          payload
+        );
+        commit("createMenuItem", menuItem.data.menuItem);
+        commit("setError", null);
+      } catch (err) {
+        commit("setError", err.response.data.message);
+      }
+    },
+  },
+
+  getters: {
+    menuItems: (state) => state.menuItems,
+  },
+};

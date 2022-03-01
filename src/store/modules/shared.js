@@ -19,11 +19,7 @@ export default {
   },
 
   getters: {
-    isLoading(state) {
-      return state.loading;
-    },
-    getError(state) {
-      return state.error;
-    }
+    isLoading: (state) => state.loading,
+    getError: (state) => state.error,
   },
 };

@@ -21,18 +21,12 @@
               <v-badge
                 :content="totalCartItems"
                 :value="totalCartItems > 0"
+                class="mr-3"
                 color="orange"
                 overlap
               >
-                <v-btn
-                  icon
-                  dark
-                  class="mr-3"
-                  v-bind="attrs"
-                  v-on="on"
-                  to="/cart"
-                >
-                  <i class="bx bxs-cart bx-sm"></i>
+                <v-btn icon dark v-bind="attrs" v-on="on" to="/cart">
+                  <i class="bx bx-cart bx-sm"></i>
                 </v-btn>
               </v-badge>
             </template>
@@ -41,7 +35,7 @@
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon dark class="mr-3" v-bind="attrs" v-on="on">
-                <i class="bx bxs-bell bx-sm"></i>
+                <i class="bx bx-bell bx-sm"></i>
               </v-btn>
             </template>
             <span>Notifications</span>
@@ -54,9 +48,9 @@
                 class="mr-3"
                 v-bind="attrs"
                 v-on="on"
-                to="/orders"
+                :to="{ name: 'Orders' }"
               >
-                <i class="bx bxs-basket bx-sm"></i>
+                <i class="bx bx-shopping-bag bx-sm"></i>
               </v-btn>
             </template>
             <span>Orders</span>
@@ -116,7 +110,7 @@ export default {
   },
 
   methods: {
-    async logout() {
+    logout() {
       this.$store.dispatch("Logout");
       this.$router.push("/login");
     },

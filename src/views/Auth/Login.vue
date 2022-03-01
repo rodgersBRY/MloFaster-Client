@@ -13,6 +13,7 @@
               type="email"
               v-model="form.email"
               color="teal"
+              autofocus
             />
             <v-text-field
               label="Password"
@@ -22,8 +23,12 @@
             />
           </div>
           <v-card-actions>
-            <div class="error--text" v-show="getError != null">
-              Check your details or register
+            <div
+              class="error-message red--text"
+              v-if="$store.getters.getError != null"
+              style="width: 70%"
+            >
+              {{ $store.getters.getError }}
             </div>
             <v-spacer />
             <v-btn
@@ -35,9 +40,14 @@
               Submit
             </v-btn>
           </v-card-actions>
-          <!-- <p v-if="showError" class="warning--text pa-4">
-            Username or Password is incorrect!
-          </p> -->
+
+          <v-snackbar v-model="snackbar" multi-line>
+            <template>
+              <v-btn color="red" text @click="snackbar = false">
+                Close
+              </v-btn>
+            </template>
+          </v-snackbar>
         </v-card>
       </form>
     </div>
@@ -54,6 +64,8 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
+      snackbar: false,
+      snackbarText: "",
       form: {
         email: "",
         password: "",
@@ -73,6 +85,10 @@ export default {
     },
   },
 
+  created() {
+    this.$store.commit("clearError");
+  },
+
   methods: {
     ...mapActions(["Login", "loadCartItems"]),
 
@@ -85,10 +101,8 @@ export default {
           await this.Login(User);
           this.loadCartItems;
         } catch (err) {
-          alert(err);
+          console.log(err);
         }
-      } else {
-        alert("Please input your Email and Password");
       }
     },
   },

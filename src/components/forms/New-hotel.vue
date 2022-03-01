@@ -9,7 +9,7 @@
         <v-card class="pa-7">
           <div class="mb-5 d-flex justify-space-between">
             <h2>Add New Hotel</h2>
-            <v-btn class="x-btn" color="red" icon dark @click="dialog = false">
+            <v-btn class="x-btn" color="red" icon dark @click="closeDialog">
               <i class="bx bx-x bx-sm"></i>
             </v-btn>
           </div>
@@ -20,6 +20,7 @@
             <v-text-field
               type="text"
               dense
+              autofocus
               label="Hotel Name"
               class="input"
               v-model="form.name"
@@ -43,13 +44,28 @@
               color="teal"
               placeholder="0712345678"
             />
-            <!-- <input type="file" class="input mb-3" @change="onFileSelected" name="image" /> -->
+            <v-btn outlined color="teal" @click="onPickFile">
+              Upload Image <i class="ml-3 bx bx-upload bx-sm"></i>
+            </v-btn>
+            <input
+              type="file"
+              accept="image/*"
+              style="display: none"
+              ref="fileInput"
+              @change="onFileSelected"
+              name="image"
+            />
           </v-card>
+
+          <div
+            class="preview_block"
+            :style="{ 'background-image': `url(${imageUrl})` }"
+          ></div>
           <v-card-actions>
             <v-spacer />
-            <v-btn color="warning" text type="submit" :disabled="isLoading"
-              >submit</v-btn
-            >
+            <v-btn color="warning" outlined type="submit" :disabled="isLoading">
+              submit
+            </v-btn>
           </v-card-actions>
         </v-card>
       </form>
@@ -64,10 +80,12 @@ export default {
   data() {
     return {
       dialog: false,
+      imageUrl: "",
       form: {
         name: "",
         email: "",
         phoneNo: "",
+        image: null,
       },
     };
   },
@@ -83,15 +101,45 @@ export default {
 
     async submit() {
       await this.createHotel(this.form);
+      this.closeDialog();
+    },
+
+    onPickFile() {
+      this.$refs.fileInput.click();
+    },
+
+    closeDialog() {
       this.form = {
         name: "",
         email: "",
         phoneNo: "",
+        image: null,
       };
+      this.imageUrl = "";
       this.dialog = false;
+    },
+
+    onFileSelected(e) {
+      let files = e.target.files;
+      let filename = files[0].name;
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        this.imageUrl = fileReader.result;
+      });
+      fileReader.readAsDataURL(files[0]);
+      this.form.image = files[0];
     },
   },
 };
 </script>
 
-<style lang="sass"></style>
+<style lang="sass">
+.preview_block
+  display: block
+  cursor: pointer
+  width: 300px
+  height: 280px
+  margin: 0 auto 20px
+  background-position: center center
+  background-size: cover
+</style>

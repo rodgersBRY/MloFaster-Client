@@ -16,12 +16,13 @@ export default {
         commit("setLoading", true);
 
         const res = await Axios.post("/hotels/add", payload);
-        
+
         commit("setLoading", false);
         commit("createHotel", res.data.hotel);
+        commit("setError", null);
       } catch (e) {
         commit("setLoading", false);
-        commit("setError", e);
+        commit("setError", e.response.data.message);
       }
     },
   },

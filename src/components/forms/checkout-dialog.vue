@@ -49,6 +49,7 @@ export default {
   data() {
     return {
       dialog: false,
+      
     };
   },
 
@@ -59,10 +60,10 @@ export default {
   methods: {
     ...mapActions(["makeOrder"]),
 
-    orderNow() {
-      this.makeOrder();
+    async orderNow() {
+      await this.makeOrder();
       this.dialog = false;
-      this.$router.push("/orders");
+      this.$router.push("/");
     },
   },
 };

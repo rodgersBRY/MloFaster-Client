@@ -88,6 +88,7 @@
 </template>
 
 <style scoped>
+
 .newsletter {
     background-color: rgb(63, 101, 138);
     color: white;

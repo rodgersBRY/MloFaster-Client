@@ -3,7 +3,6 @@ import axios from "axios";
 export default {
   state: {
     cartItems: [],
-    totalAmount: 0,
   },
 
   mutations: {
@@ -34,10 +33,16 @@ export default {
     async addItemToCart({ commit, dispatch }, payload) {
       const itemId = payload;
 
-      const res = await axios.post(`/cart/add/${itemId}`);
-      const items = res.data.cart.items;
-      commit("addCartItem", items);
-      dispatch("loadCartItems");
+      try {
+        const res = await axios.post(`/cart/add/${itemId}`);
+        const items = res.data.cart.items;
+        commit("addCartItem", items);
+        commit("clearError");
+        dispatch("loadCartItems");
+      } catch (err) {
+        let error = err.error.data.message;
+        commit("setError", error);
+      }
     },
 
     async removeCartItem({ commit }, cartItem) {
