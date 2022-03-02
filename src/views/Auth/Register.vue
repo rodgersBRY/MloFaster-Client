@@ -6,7 +6,7 @@
         <v-card-text>Create an account and order with MloFaster</v-card-text>
 
         <div>
-          <v-text-field label="Name" dense v-model="form.name" color="teal" />
+          <v-text-field autofocus label="Name" dense v-model="form.name" color="teal" />
           <v-text-field
             label="Phone Number"
             dense

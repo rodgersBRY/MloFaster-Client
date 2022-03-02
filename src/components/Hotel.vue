@@ -20,58 +20,15 @@
           </v-img>
         </div>
 
-        <!-- <div class="absolute">
-          <v-sheet
-            elevation="3"
-            width="350"
-            class="pa-3"
-            style="border-radius: 7px;"
-          >
-            <h3>Cart Items</h3>
-            <v-list>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title class="grey--text">
-                    Product
-                  </v-list-item-title>
-                </v-list-item-content>
-                <v-list-item-content class="ml-10">
-                  <v-list-item-title class="grey--text">
-                    Price
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-
-              <v-list-item v-for="item in cartItems" :key="item.id">
-                <v-list-item-content>
-                  <v-list-item-title>
-                    {{ item.title }}
-                  </v-list-item-title>
-                </v-list-item-content>
-                <v-list-item-content class="ml-1">
-                  <v-list-item-subtitle>
-                    Ksh. {{ item.price }}
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-                <v-list-item-content>
-                  <v-btn text>
-                    <i class="bx bx-x bx-sm"></i>
-                  </v-btn>
-                </v-list-item-content>
-              </v-list-item>
-              <v-divider></v-divider>
-
-              <div class="mt-5 d-flex justify-end">
-                <v-btn color="warning" dark depressed>Checkout & Order</v-btn>
-              </div>
-            </v-list>
-          </v-sheet>
-        </div> -->
+        <cart-items-list v-if="user.user.status == 'client'" />
 
         <div class="main-content">
           <div class="d-flex justify-space-between mb-4" style="width: 60%">
             <h2 class="mb-4">Menu Items</h2>
-            <div class="add-hotel" v-if="isAuthenticated">
+            <div
+              class="add-hotel"
+              v-if="isAuthenticated && user.user.status == 'admin'"
+            >
               <new-menu-item />
             </div>
           </div>
@@ -86,7 +43,28 @@
               <div>
                 <p>Ksh. {{ item.price }}</p>
                 <div class="d-flex align-center" v-if="isAuthenticated">
-                  <v-btn outlined color="warning" @click="addToBag(item._id)">
+                  <div class="admin-ops" v-if="user.user.status == 'admin'">
+                    <v-btn
+                      text
+                      color="error"
+                      @click.prevent="deleteItem(item._id)"
+                    >
+                      <i class="bx bx-trash bx-sm"></i>
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="success"
+                      @click.prevent="editItem(item._id)"
+                    >
+                      <i class="bx bx-pencil bx-sm" />
+                    </v-btn>
+                  </div>
+                  <v-btn
+                    v-else
+                    outlined
+                    color="warning"
+                    @click="addToBag(item._id)"
+                  >
                     <i class="bx bxs-cart-alt bx-sm"></i>Add to Cart
                   </v-btn>
                 </div>
@@ -109,6 +87,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     "new-menu-item": require("./forms/new-menu-item.vue").default,
+    "cart-items-list": require("../components/cart-items-list.vue").default,
   },
 
   data() {
@@ -119,7 +98,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["isAuthenticated", "hotels", "menuItems"]),
+    ...mapGetters(["isAuthenticated", "hotels", "menuItems", "user"]),
   },
 
   methods: {
@@ -129,17 +108,15 @@ export default {
       await this.addItemToCart(itemId);
       this.loadCartItems;
     },
+
+    deleteItem(id) {
+      console.log(id);
+    },
   },
 };
 </script>
 
 <style scoped>
-.absolute {
-  position: absolute;
-  top: 25%;
-  right: 10%;
-}
-
 .main-content {
   margin: 3rem;
 }

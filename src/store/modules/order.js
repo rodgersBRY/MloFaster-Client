@@ -27,7 +27,7 @@ export default {
     async loadOrders({ commit }) {
       commit("setLoading", true);
       try {
-        const res = await axios.get("/orders");
+        const res = await axios.get("/user/orders");
 
         if (res != null) {
           commit("setOrders", res.data.orders);
@@ -45,11 +45,11 @@ export default {
     async makeOrder({ commit, dispatch }) {
       commit("setLoading", true);
       try {
-        const res = await axios.post("/orders/order");
+        const res = await axios.post("/user/place-order");
         console.log(res);
 
         commit("addToOrders", res);
-        commit('clearCart')
+        commit("clearCart");
         commit("setLoading", false);
         dispatch("loadOrders");
         commit("setError", null);

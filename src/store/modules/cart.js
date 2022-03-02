@@ -25,7 +25,7 @@ export default {
 
   actions: {
     async loadCartItems({ commit }) {
-      const res = await axios.get("/cart");
+      const res = await axios.get("/user/cart");
       const items = res.data.cartItems;
       commit("setCartItems", items);
     },
@@ -34,7 +34,7 @@ export default {
       const itemId = payload;
 
       try {
-        const res = await axios.post(`/cart/add/${itemId}`);
+        const res = await axios.post(`/user/cart/add/${itemId}`);
         const items = res.data.cart.items;
         commit("addCartItem", items);
         commit("clearError");
@@ -47,14 +47,14 @@ export default {
 
     async removeCartItem({ commit }, cartItem) {
       const itemId = cartItem;
-      const res = await axios.delete(`/cart/${itemId}`);
+      const res = await axios.delete(`/user/cart/${itemId}`);
       commit("updateCartItems", res.data.cartItems);
     },
 
     async clearCart({ commit }) {
       commit("setLoading", true);
 
-      const res = await axios.post("/cart/clear");
+      const res = await axios.post("/user/cart/clear");
       commit("clearCart");
       commit("setLoading", false);
     },

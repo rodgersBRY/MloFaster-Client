@@ -9,6 +9,7 @@ import shared from "./modules/shared";
 import menuItems from "./modules/menuItem";
 import cartItems from "./modules/cart";
 import orders from "./modules/order";
+import admin from "./modules/admin";
 
 Vue.use(Vuex);
 
@@ -20,6 +21,7 @@ export const store = new Vuex.Store({
     menuItems,
     cartItems,
     orders,
+    admin,
   },
   plugins: [createPersistedState()], // deal with Vuex resetting after refreshing
 });

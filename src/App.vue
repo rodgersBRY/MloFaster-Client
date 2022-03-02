@@ -11,9 +11,13 @@
         </div>
         <v-spacer />
         <div class="cart">
-          <v-avatar size="55" color="warning" class="mr-16">
-            <v-icon>mdi-account</v-icon>
-            <!-- <v-img :src="require('@/assets/profile-pic.jpg')"></v-img> -->
+          <v-avatar size="55" color="warning" class="mr-16 text-center">
+            <v-img
+              v-if="isAuthenticated"
+              src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fdm0qx8t0i9gc9.cloudfront.net%2Fthumbnails%2Fvideo%2Fr6uQGb9%2Freal-cuban-people-and-emotions-portrait-of-sad-senior-hispanic-man-looking-at-camera-worried-old-black-grandfather-with-mustache-and-hat-from-havana-cuba-close-up-of-face_han-yjel_thumbnail-1080_06.png&f=1&nofb=1"
+              alt="profile pic"
+            ></v-img>
+            <v-icon v-else>mdi-account</v-icon>
           </v-avatar>
 
           <v-tooltip bottom>
@@ -59,9 +63,14 @@
         <v-spacer />
 
         <!-- router link navigates without refreshing the pages -->
-        <router-link tag="li" class="nav-link" active-class="active" to="/about"
-          >About Us</router-link
+        <router-link
+          tag="li"
+          class="nav-link"
+          active-class="active"
+          to="/about"
         >
+          About Us
+        </router-link>
         |
 
         <!-- href="javascript:void(0)" -->
@@ -102,7 +111,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["isAuthenticated", "cartItems"]),
+    ...mapGetters(["isAuthenticated", "cartItems", "user"]),
 
     totalCartItems() {
       return this.cartItems.length;

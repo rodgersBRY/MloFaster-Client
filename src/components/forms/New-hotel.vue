@@ -1,8 +1,7 @@
 <template>
   <div class="new-hotel">
-    <v-btn color="teal" dark @click="dialog = true">
-      <i class="bx bx-plus bx-sm"></i>
-      New Hotel
+    <v-btn :color="color" :icon="icon" dark @click="dialog = true">
+      <slot />
     </v-btn>
     <v-dialog v-model="dialog" width="40%" persistent>
       <form @submit.prevent="submit" enctype="multipart/form-data">
@@ -77,27 +76,42 @@
 import { mapActions, mapGetters } from "vuex";
 
 export default {
+  props: {
+    hotel: {
+      type: Object,
+      required: false,
+    },
+    icon: {
+      required: false,
+    },
+    color: {
+      type: String,
+    }
+
+  },
   data() {
     return {
       dialog: false,
       imageUrl: "",
-      form: {
-        name: "",
-        email: "",
-        phoneNo: "",
-        image: null,
-      },
+      form: this.hotel
+        ? { ...this.hotel }
+        : {
+            name: "",
+            email: "",
+            phoneNo: "",
+            image: null,
+          },
     };
   },
 
   computed: {
-    isLoading() {
-      return this.$store.getters.isLoading;
-    },
+    ...mapGetters(["isLoading"]),
   },
 
   methods: {
     ...mapActions(["createHotel"]),
+
+    openDialog() {},
 
     async submit() {
       await this.createHotel(this.form);
@@ -109,13 +123,13 @@ export default {
     },
 
     closeDialog() {
-      this.form = {
-        name: "",
-        email: "",
-        phoneNo: "",
-        image: null,
-      };
-      this.imageUrl = "";
+      // this.form = {
+      //   name: "",
+      //   email: "",
+      //   phoneNo: "",
+      //   image: null,
+      // };
+      // this.imageUrl = "";
       this.dialog = false;
     },
 
