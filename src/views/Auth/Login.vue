@@ -83,6 +83,9 @@ export default {
         this.$router.push("/");
       }
     },
+    getError(value) {
+      if (value !== null) this.form.password = "";
+    },
   },
 
   created() {

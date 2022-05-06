@@ -46,15 +46,15 @@
               />
             </v-list-item-avatar>
           </v-list-item>
-          <div class="list-actions grey lighten-3 pr-3 py-1">
-            <v-row no-gutters class="">
-              <v-spacer></v-spacer>
+          <div 
+          class="list-actions grey lighten-3 pr-3 py-1"
+          v-if="isAuthenticated && user.user.status == 'admin'"
+          >
+            <v-row no-gutters>
+              <v-spacer />
               <v-btn icon class="mr-7" @click.prevent="deleteHotel(ht._id)">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
-              <!-- <v-btn icon @click.prevent="editHotel(ht._id)">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn> -->
               <new-hotel :hotel="ht" :icon="true" color="grey darken-2">
                 <v-icon>mdi-pencil</v-icon>
               </new-hotel>

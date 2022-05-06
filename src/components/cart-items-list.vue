@@ -3,7 +3,7 @@
     <v-sheet elevation="3" width="350" class="pa-3" style="border-radius: 7px;">
       <h3>Cart Items</h3>
       <v-list>
-        <v-list-item>
+        <v-list-item v-if="cartItems.length != 0">
           <v-list-item-content>
             <v-list-item-title class="grey--text">
               Product
@@ -22,7 +22,7 @@
           <v-list-item-content class="ml-10"> </v-list-item-content>
         </v-list-item>
 
-        <div class="no-items pl-4" v-if="cartItems.length <= 0">
+        <div class="no-items pl-4" v-else>
           <p>Your cart items will show up here</p>
         </div>
 

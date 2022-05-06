@@ -32,7 +32,7 @@
               <new-menu-item />
             </div>
           </div>
-          <div v-for="item in menuItems" :key="item._id">
+          <div v-for="item in menus" :key="item._id">
             <div
               class="list-item d-flex justify-space-between align-center mb-5"
               v-if="id === item.hotelId"
@@ -94,19 +94,32 @@ export default {
     return {
       id: this.$route.params.Hid,
       disabled: true,
+      menus: null,
     };
   },
 
   computed: {
-    ...mapGetters(["isAuthenticated", "hotels", "menuItems", "user"]),
+    ...mapGetters(["isAuthenticated", "hotels", "user"]),
+  },
+
+  created() {
+    this.getMenuItems();
   },
 
   methods: {
     ...mapActions(["addItemToCart", "loadCartItems"]),
+    ...mapGetters(["menuItems"]),
+
+    async getMenuItems() {
+      const items = await this.menuItems();
+      if (items) {
+        this.menus = items;
+      }
+    },
 
     async addToBag(itemId) {
       await this.addItemToCart(itemId);
-      this.loadCartItems;
+      this.loadCartItems();
     },
 
     deleteItem(id) {

@@ -64,8 +64,9 @@
           dark
           color="warning"
           @click="clearCart"
-          >Clear Cart</v-btn
         >
+          Clear Cart
+        </v-btn>
       </div>
     </v-sheet>
 

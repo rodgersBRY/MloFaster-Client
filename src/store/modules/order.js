@@ -45,10 +45,10 @@ export default {
     async makeOrder({ commit, dispatch }) {
       commit("setLoading", true);
       try {
-        const res = await axios.post("/user/place-order");
-        console.log(res);
+        const res = await axios.post("/user/order");
+        console.log(res.data.result);
 
-        commit("addToOrders", res);
+        commit("addToOrders", res.data.result);
         commit("clearCart");
         commit("setLoading", false);
         dispatch("loadOrders");

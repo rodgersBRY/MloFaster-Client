@@ -63,7 +63,7 @@
         <v-spacer />
 
         <!-- router link navigates without refreshing the pages -->
-        <router-link
+        <!-- <router-link
           tag="li"
           class="nav-link"
           active-class="active"
@@ -71,7 +71,7 @@
         >
           About Us
         </router-link>
-        |
+        | -->
 
         <!-- href="javascript:void(0)" -->
         <span v-if="isAuthenticated">
@@ -156,6 +156,6 @@ export default {
 
 .nav-link:hover,
 .nav-link.active {
-  color: rgb(83, 83, 204);
+  color: rgb(74, 77, 80);
 }
 </style>

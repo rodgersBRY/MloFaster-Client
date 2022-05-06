@@ -29,7 +29,6 @@
           <v-btn
             color="error"
             text
-            :disabled="isLoading"
             @click="dialog = false"
             >cancel</v-btn
           >
@@ -49,7 +48,6 @@ export default {
   data() {
     return {
       dialog: false,
-      
     };
   },
 
@@ -58,12 +56,17 @@ export default {
   },
 
   methods: {
-    ...mapActions(["makeOrder"]),
-
-    async orderNow() {
-      await this.makeOrder();
-      this.dialog = false;
-      this.$router.push("/");
+    orderNow() {
+      this.$store
+        .dispatch("makeOrder")
+        .then(() => {
+          this.dialog = false;
+          this.$router.push("/");
+        })
+        .catch((err) => {
+          console.log(err.data);
+        });
+      // await this.makeOrder();
     },
   },
 };
